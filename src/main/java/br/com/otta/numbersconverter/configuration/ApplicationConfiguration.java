@@ -1,8 +1,5 @@
 package br.com.otta.numbersconverter.configuration;
 
-import java.io.Console;
-
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -14,8 +11,4 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ApplicationConfiguration {
 
-    @Bean
-    public Console console() {
-        return System.console();
-    }
 }
