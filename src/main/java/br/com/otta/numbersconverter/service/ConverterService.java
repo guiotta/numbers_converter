@@ -1,67 +1,21 @@
 package br.com.otta.numbersconverter.service;
 
-import java.util.List;
-import java.util.Locale;
-
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import br.com.otta.numbersconverter.model.ItemType;
-import br.com.otta.numbersconverter.model.Numbers;
+import br.com.otta.numbersconverter.strategy.manager.ConverterManager;
 
 @Service
 public class ConverterService {
+    private final ConverterManager converterManager;
 
-    public String executeConverter(ItemType itemType, String userInput) {
-        switch (itemType) {
-        case ARABIC:
-            Integer arabic = Integer.valueOf(userInput);
-            return convertToRoman(arabic);
-
-        case ROMAN:
-            return String.valueOf(this.convertToArabic(userInput));
-
-        default:
-            throw new IllegalArgumentException("Não é possível definir qual conversor deve ser usado.");
-        }
+    public ConverterService(ConverterManager converterManager) {
+        this.converterManager = converterManager;
     }
 
-    public String convertToRoman(Integer arabic) {
-        StringBuilder resultBuilder = new StringBuilder();
-        List<Numbers> reversedNumbers = Numbers.reverse();
-        int index = 0;
+    public String executeConverter(String userInput, int optionSelected) {
+        ItemType itemType = ItemType.get(optionSelected);
 
-        while((reversedNumbers.size() > index) && (arabic > 0)) {
-            Numbers selectedNumber = reversedNumbers.get(index);
-
-            if (selectedNumber.getArabicValue() <= arabic) {
-                resultBuilder.append(selectedNumber.getRomanValue());
-                arabic -= selectedNumber.getArabicValue();
-            } else {
-                index++;
-            }
-        }
-
-        return resultBuilder.toString();
-    }
-
-    public int convertToArabic(String input) {
-        List<Numbers> reversedNumbers = Numbers.reverse();
-        String roman = input.toUpperCase(Locale.US);
-        int result = 0;
-        int index = 0;
-
-        while((reversedNumbers.size() > index) && (!StringUtils.isBlank(roman))) {
-            Numbers selectedNumber = reversedNumbers.get(index);
-
-            if (roman.startsWith(selectedNumber.getRomanValue())) {
-                result += selectedNumber.getArabicValue();
-                roman = roman.substring(selectedNumber.getRomanValue().length());
-            } else {
-                index++;
-            }
-        }
-
-        return result;
+        return converterManager.execute(userInput, itemType);
     }
 }

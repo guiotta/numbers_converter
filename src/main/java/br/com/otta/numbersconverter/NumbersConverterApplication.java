@@ -6,7 +6,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import br.com.otta.numbersconverter.model.ItemType;
 import br.com.otta.numbersconverter.service.ConverterService;
 
 @SpringBootApplication
@@ -29,13 +28,16 @@ public class NumbersConverterApplication implements CommandLineRunner {
             this.printMenu();
             int option = scanner.nextInt();
             while(option != EXIT_VALUE) {
-                System.out.println("Escolha uma das opções: ");
+                System.out.println("Entre com o valor a converter: ");
                 scanner.nextLine();
                 String userInput = scanner.nextLine();
 
-                ItemType selectedItem = ItemType.get(option);
-                String convertedValue = service.executeConverter(selectedItem, userInput);
-                System.out.println(convertedValue);
+                try {
+                    String convertedValue = service.executeConverter(userInput, option);
+                    System.out.println(convertedValue);
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
 
                 this.printMenu();
                 option = scanner.nextInt();
@@ -47,8 +49,8 @@ public class NumbersConverterApplication implements CommandLineRunner {
     private void printMenu() {
         System.out.println();
         System.out.println("Escolha uma das opções: ");
-        System.out.println("1. Converter número romano para arábico.");
-        System.out.println("2. Converter número arábico para romano. ");
+        System.out.println("1. Converter número arábico para romano. ");
+        System.out.println("2. Converter número romano para arábico.");
         System.out.println("3. Sair");
     }
 
