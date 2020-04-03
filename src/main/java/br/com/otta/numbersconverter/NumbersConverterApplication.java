@@ -10,9 +10,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import br.com.otta.numbersconverter.model.Numbers;
+import br.com.otta.numbersconverter.service.ConverterService;
 
 @SpringBootApplication
 public class NumbersConverterApplication implements CommandLineRunner {
+    private final ConverterService service;
+
+    public NumbersConverterApplication(ConverterService service) {
+        this.service = service;
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(NumbersConverterApplication.class, args);
@@ -23,9 +29,11 @@ public class NumbersConverterApplication implements CommandLineRunner {
         try(Scanner scanner = new Scanner(System.in)) {
             System.out.println("Entre com o valor arábico para ser convertido: ");
             String value = scanner.nextLine();
-            Integer arabic = Integer.valueOf(value);
+            //Integer arabic = Integer.valueOf(value);
 
-            StringBuilder resultBuilder = new StringBuilder();
+            //String result = service.convertToRoman(arabic);
+            int result = service.convertToArabic(value);
+            /*StringBuilder resultBuilder = new StringBuilder();
             List<Numbers> reversedNumbers = Numbers.reverse();
             int index = 0;
             while((reversedNumbers.size() > index) && (arabic > 0)) {
@@ -37,9 +45,9 @@ public class NumbersConverterApplication implements CommandLineRunner {
                 } else {
                     index++;
                 }
-            }
+            }*/
 
-            System.out.println(resultBuilder.toString());
+            System.out.println(result);
         }
     }
 
