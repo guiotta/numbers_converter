@@ -6,10 +6,25 @@ import java.util.Locale;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import br.com.otta.numbersconverter.model.ItemType;
 import br.com.otta.numbersconverter.model.Numbers;
 
 @Service
 public class ConverterService {
+
+    public String executeConverter(ItemType itemType, String userInput) {
+        switch (itemType) {
+        case ARABIC:
+            Integer arabic = Integer.valueOf(userInput);
+            return convertToRoman(arabic);
+
+        case ROMAN:
+            return String.valueOf(this.convertToArabic(userInput));
+
+        default:
+            throw new IllegalArgumentException("Não é possível definir qual conversor deve ser usado.");
+        }
+    }
 
     public String convertToRoman(Integer arabic) {
         StringBuilder resultBuilder = new StringBuilder();

@@ -1,19 +1,18 @@
 package br.com.otta.numbersconverter;
 
-import java.io.Console;
-import java.util.Collection;
-import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import br.com.otta.numbersconverter.model.Numbers;
+import br.com.otta.numbersconverter.model.ItemType;
 import br.com.otta.numbersconverter.service.ConverterService;
 
 @SpringBootApplication
 public class NumbersConverterApplication implements CommandLineRunner {
+    private static final int EXIT_VALUE = 3;
+    
     private final ConverterService service;
 
     public NumbersConverterApplication(ConverterService service) {
@@ -27,28 +26,30 @@ public class NumbersConverterApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         try(Scanner scanner = new Scanner(System.in)) {
-            System.out.println("Entre com o valor arábico para ser convertido: ");
-            String value = scanner.nextLine();
-            //Integer arabic = Integer.valueOf(value);
+            this.printMenu();
+            int option = scanner.nextInt();
+            while(option != EXIT_VALUE) {
+                System.out.println("Escolha uma das opções: ");
+                scanner.nextLine();
+                String userInput = scanner.nextLine();
 
-            //String result = service.convertToRoman(arabic);
-            int result = service.convertToArabic(value);
-            /*StringBuilder resultBuilder = new StringBuilder();
-            List<Numbers> reversedNumbers = Numbers.reverse();
-            int index = 0;
-            while((reversedNumbers.size() > index) && (arabic > 0)) {
-                Numbers selectedNumber = reversedNumbers.get(index);
+                ItemType selectedItem = ItemType.get(option);
+                String convertedValue = service.executeConverter(selectedItem, userInput);
+                System.out.println(convertedValue);
 
-                if (selectedNumber.getArabicValue() <= arabic) {
-                    resultBuilder.append(selectedNumber.getRomanValue());
-                    arabic -= selectedNumber.getArabicValue();
-                } else {
-                    index++;
-                }
-            }*/
-
-            System.out.println(result);
+                this.printMenu();
+                option = scanner.nextInt();
+            }
+            System.out.println("Encerrando aplicação.");
         }
+    }
+
+    private void printMenu() {
+        System.out.println();
+        System.out.println("Escolha uma das opções: ");
+        System.out.println("1. Converter número romano para arábico.");
+        System.out.println("2. Converter número arábico para romano. ");
+        System.out.println("3. Sair");
     }
 
 }
