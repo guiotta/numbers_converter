@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import br.com.otta.numbersconverter.model.ItemType;
 import br.com.otta.numbersconverter.model.Numbers;
+import br.com.otta.numbersconverter.validation.ArabicConverterValidator;
 
 /**
  * Componente para realizar a conversão de um valor digitado pelo usuário para um numeral Arábico.
@@ -17,6 +18,13 @@ import br.com.otta.numbersconverter.model.Numbers;
  */
 @Component
 public class ArabicConverterStrategy implements ConverterStrategy {
+    private static final String VALIDATION_ERROR = "Valor inserido pelo usuário não é um numeral romano válido: %s.";
+
+    private final ArabicConverterValidator validator;
+
+    public ArabicConverterStrategy(ArabicConverterValidator validator) {
+        this.validator = validator;
+    }
 
     @Override
     public ItemType getItemType() {
@@ -25,6 +33,10 @@ public class ArabicConverterStrategy implements ConverterStrategy {
 
     @Override
     public String convert(String userInput) {
+        if (!validator.validate(userInput)) {
+            throw new IllegalArgumentException(String.format(VALIDATION_ERROR, userInput));
+        }
+
         List<Numbers> reversedNumbers = Numbers.reverse();
         String roman = userInput.toUpperCase(Locale.US);
         int result = 0;
