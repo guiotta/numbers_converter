@@ -1,12 +1,13 @@
 package br.com.otta.numbersconverter.model;
 
 import java.util.Arrays;
+import java.util.Collection;
 
 public enum ItemType {
     UNKNOWN(0),
     ROMAN(1),
     ARABIC(2);
-    
+
     private int id;
 
     private ItemType(int id) {
@@ -19,6 +20,10 @@ public enum ItemType {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public static Collection<ItemType> validValues() {
+        return Arrays.asList(ItemType.ROMAN, ItemType.ARABIC);
     }
 
     public static ItemType get(int id) {

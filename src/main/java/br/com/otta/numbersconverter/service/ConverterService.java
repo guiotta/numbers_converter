@@ -2,20 +2,24 @@ package br.com.otta.numbersconverter.service;
 
 import org.springframework.stereotype.Service;
 
+import br.com.otta.numbersconverter.factory.ConverterResponseFactory;
 import br.com.otta.numbersconverter.model.ItemType;
+import br.com.otta.numbersconverter.model.api.ConverterResponse;
 import br.com.otta.numbersconverter.strategy.manager.ConverterManager;
 
 @Service
 public class ConverterService {
     private final ConverterManager converterManager;
+    private final ConverterResponseFactory converterResponseFactory;
 
-    public ConverterService(ConverterManager converterManager) {
+    public ConverterService(ConverterManager converterManager, ConverterResponseFactory converterResponseFactory) {
         this.converterManager = converterManager;
+        this.converterResponseFactory = converterResponseFactory;
     }
 
-    public String executeConverter(String userInput, int optionSelected) {
-        ItemType itemType = ItemType.get(optionSelected);
+    public ConverterResponse executeConverter(String userInput, ItemType itemType) {
+        String convertedValue = converterManager.execute(userInput, itemType);
 
-        return converterManager.execute(userInput, itemType);
+        return converterResponseFactory.create(userInput, convertedValue);
     }
 }
