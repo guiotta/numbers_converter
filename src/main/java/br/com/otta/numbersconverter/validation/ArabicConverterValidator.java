@@ -3,6 +3,7 @@ package br.com.otta.numbersconverter.validation;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,6 +23,7 @@ public class ArabicConverterValidator {
      * @return Retorna {@link Boolean#TRUE} caso seja válido, {@link Boolean#FALSE} caso contrário.
      */
     public boolean validate(String userInput) {
-        return !NON_ROMAN_NUMERALS_PATTERN.matcher(userInput.toUpperCase(Locale.US)).find();
+        return !StringUtils.isBlank(userInput)
+                && !NON_ROMAN_NUMERALS_PATTERN.matcher(StringUtils.upperCase(userInput, Locale.US)).find();
     }
 }

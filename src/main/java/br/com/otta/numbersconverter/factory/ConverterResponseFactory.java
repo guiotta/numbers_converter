@@ -4,6 +4,12 @@ import org.springframework.stereotype.Component;
 
 import br.com.otta.numbersconverter.model.api.ConverterResponse;
 
+/**
+ * Componente para construir um {@link ConverterResponse} usando o valor original e o convertido.
+ *
+ * @author Guilherme
+ *
+ */
 @Component
 public class ConverterResponseFactory {
 

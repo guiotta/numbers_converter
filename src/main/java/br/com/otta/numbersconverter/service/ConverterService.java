@@ -7,6 +7,12 @@ import br.com.otta.numbersconverter.model.ItemType;
 import br.com.otta.numbersconverter.model.api.ConverterResponse;
 import br.com.otta.numbersconverter.strategy.manager.ConverterManager;
 
+/**
+ * Classe de serviço para abstrair os comportamentos necessários para a conversão de um valor.
+ *
+ * @author Guilherme
+ *
+ */
 @Service
 public class ConverterService {
     private final ConverterManager converterManager;

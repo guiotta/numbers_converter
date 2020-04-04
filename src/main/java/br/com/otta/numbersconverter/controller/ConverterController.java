@@ -14,7 +14,8 @@ import br.com.otta.numbersconverter.model.api.ConverterResponse;
 import br.com.otta.numbersconverter.service.ConverterService;
 
 /**
- * 
+ * Controller para as requisições de conversão.
+ *
  * @author Guilherme
  *
  */
