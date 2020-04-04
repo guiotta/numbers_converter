@@ -41,7 +41,7 @@ public class ConverterControllerTest {
     @BeforeEach
     protected void setUp() {
         given(request.getUserInput()).willReturn(INPUT);
-        given(request.getItemType()).willReturn(TYPE);
+        given(request.getTypeToConvert()).willReturn(TYPE);
         given(service.executeConverter(INPUT, TYPE)).willReturn(response);
     }
 

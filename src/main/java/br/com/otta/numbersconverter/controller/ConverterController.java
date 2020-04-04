@@ -30,6 +30,6 @@ public class ConverterController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ConverterResponse> convert(@Valid @RequestBody ConverterRequest request) {
-        return ResponseEntity.ok(service.executeConverter(request.getUserInput(), request.getItemType()));
+        return ResponseEntity.ok(service.executeConverter(request.getUserInput(), request.getTypeToConvert()));
     }
 }

@@ -7,8 +7,8 @@ import javax.validation.constraints.NotNull;
 import br.com.otta.numbersconverter.model.ItemType;
 
 public class ConverterRequest {
-    @NotNull(message = "Informe um tipo de conversão.")
-    private ItemType itemType;
+    @NotNull(message = "Informe um valor para o tipo do resultado da conversão.")
+    private ItemType typeToConvert;
     @NotNull(message = "Informe um valor para converter.")
     private String userInput;
 
@@ -17,16 +17,16 @@ public class ConverterRequest {
     }
 
     public ConverterRequest(ItemType itemType, String userInput) {
-        this.itemType = itemType;
+        this.typeToConvert = itemType;
         this.userInput = userInput;
     }
 
-    public ItemType getItemType() {
-        return itemType;
+    public ItemType getTypeToConvert() {
+        return typeToConvert;
     }
 
-    public void setItemType(ItemType itemType) {
-        this.itemType = itemType;
+    public void setTypeToConvert(ItemType typeToConvert) {
+        this.typeToConvert = typeToConvert;
     }
 
     public String getUserInput() {
@@ -39,7 +39,7 @@ public class ConverterRequest {
 
     @Override
     public int hashCode() {
-        return Objects.hash(itemType, userInput);
+        return Objects.hash(typeToConvert, userInput);
     }
 
     @Override
@@ -51,14 +51,14 @@ public class ConverterRequest {
             return false;
         }
         ConverterRequest other = (ConverterRequest) obj;
-        return itemType == other.itemType && Objects.equals(userInput, other.userInput);
+        return typeToConvert == other.typeToConvert && Objects.equals(userInput, other.userInput);
     }
 
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("ConverterRequest [itemType=");
-        builder.append(itemType);
+        builder.append(typeToConvert);
         builder.append(", userInput=");
         builder.append(userInput);
         builder.append("]");
